@@ -1,0 +1,31 @@
+Prepare for 
+# Create Resource Group
+az group create -n <ResourceGroupName>  -l francecentral
+ 
+# Create Storage Account
+az storage account create -n <StorageAccountName> -g <ResourceGroupName>  -l francecentral --sku Standard_LRS
+ 
+# Create Storage Account Container
+az storage container create -n <ContainerName> --account-name <StorageAccountName>
+
+
+#Create Service Principal
+az ad sp create-for-rbac --name <ServicePrincipalDisplayName>
+
+Copy the Output
+  "appId": "ClientId",
+  "displayName": "Display Name",
+  "password": "ClientSecret",
+  "tenant": "TenantId"
+
+# Create Service Principal
+az ad sp create-for-rbac --name myServicePrincipalName \
+                         --role Contributor \
+                         --scopes /subscriptions/<mySubscriptionID>
+
+
+## Add Secrets:
+AZURE_AD_CLIENT_ID
+AZURE_AD_CLIENT_SECRET
+AZURE_AD_TENANT_ID
+AZURE_SUBSCRIPTION_ID
