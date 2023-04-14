@@ -1,6 +1,6 @@
 backend "azurerm" {
-  resource_group_name  = "tamopstfstates"
-  storage_account_name = "tfstatedevops"
-  container_name       = "terraformgithubexample"
-  key                  = "terraformgithubexample.tfstate"
+  resource_group_name  = "just-functional-infra-rg"
+  storage_account_name = "stjustfunctionaltf"
+  container_name       = "tfstate"
+  key                  = "functions.tfstate"
 }
