@@ -4,9 +4,16 @@ provider "azurerm" {
 }
  
 data "azurerm_client_config" "current" {}
+
+variable "default_location" {
+  type    = string
+  default = "francecentral"
+}
  
 #Create Resource Group
 resource "azurerm_resource_group" "tamops" {
-  name     = "tamops"
-  location = "eastus2"
+  name     = "rg-${var.application_name}"
+  location = var.francecentral
 }
+
+
