@@ -103,7 +103,7 @@ resource "azurerm_linux_function_app" "functionPlan" {
 
   site_config {
     application_stack {
-      dotnet_version = var.default_location
+      dotnet_version = var.dotnet_version
     }
     cors {
       allowed_origins = ["https://portal.azure.com", "http://localhost:5320", "https://dominioncfg.github.io"]
