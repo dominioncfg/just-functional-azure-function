@@ -96,7 +96,7 @@ resource "azurerm_service_plan" "functionsPlan" {
   sku_name            = "Y1"
 }
 
-resource "azurerm_linux_function_app" "functionPlan" {
+resource "azurerm_linux_function_app" "functionApp" {
   name                = "fap-${var.application_name}-evaluator-${local.environment_prefix}"
   resource_group_name = azurerm_resource_group.rgApp.name
   location            = azurerm_resource_group.rgApp.location
@@ -115,4 +115,8 @@ resource "azurerm_linux_function_app" "functionPlan" {
   }
 }
 
-
+output "db_password" {
+  value       = azurerm_linux_function_app.functionApp.name
+  description = "The Name of the Azure Function"
+  sensitive   = true
+}
