@@ -19,6 +19,7 @@ jobs:
       TF_STORAGE_ACCOUNT: ${{ secrets.TF_STORAGE_ACCOUNT }}
       TF_CONTAINER_NAME: ${{ secrets.TF_CONTAINER_NAME}}
       TF_FILE_NAME: ${{ secrets.TF_FILE_NAME }}
+      AZURE_FUNCTION_CORS: ${{ secrets.AZURE_FUNCTION_CORS }}
     runs-on: ubuntu-latest
     environment: production
  
@@ -55,11 +56,15 @@ jobs:
       
     - name: Terraform Plan
       working-directory: terraform   
-      run: terraform plan
+      run: |
+        terraform plan \
+        -var "cors=$AZURE_FUNCTION_CORS"
       
     - name: Terraform Apply
       working-directory: terraform   
-      run: terraform apply -auto-approve
+      run: |
+        terraform apply \
+        -var "cors=$AZURE_FUNCTION_CORS"
       
     
     

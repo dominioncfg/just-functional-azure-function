@@ -49,7 +49,7 @@ variable "dotnet_version" {
 
 variable "functions_cors" {
   type    = list
-  default = ["https://portal.azure.com", "http://localhost:5320", "https://dominioncfg.github.io"]
+  default = ["https://portal.azure.com"]
 }
 
 ##################################################################################
