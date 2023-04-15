@@ -42,6 +42,11 @@ variable "environment_name" {
   default = "Production"
 }
 
+variable "dotnet_version" {
+  type    = string
+  default = "6.0"
+}
+
 
 ##################################################################################
 # Locals
@@ -97,8 +102,13 @@ resource "azurerm_linux_function_app" "functionPlan" {
   service_plan_id            = azurerm_service_plan.functionsPlan.id
 
   site_config {
+    application_stack {
+      dotnet_version = var.default_location
+    }
     cors {
       allowed_origins = ["https://portal.azure.com", "http://localhost:5320", "https://dominioncfg.github.io"]
     }
   }
 }
+
+
