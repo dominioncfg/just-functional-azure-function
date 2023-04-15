@@ -34,7 +34,7 @@ variable "default_location" {
 
 variable "application_name" {
   type    = string
-  default = "justfunction"
+  default = "justfunctional"
 }
 
 variable "environment_name" {
@@ -88,7 +88,7 @@ resource "azurerm_service_plan" "functionsPlan" {
 }
 
 resource "azurerm_linux_function_app" "functionPlan" {
-  name                = "fap-${var.application_name}-${local.environment_prefix}-evaluator"
+  name                = "fap-${var.application_name}-evaluator-${local.environment_prefix}"
   resource_group_name = azurerm_resource_group.rgApp.name
   location            = azurerm_resource_group.rgApp.location
 
@@ -96,5 +96,11 @@ resource "azurerm_linux_function_app" "functionPlan" {
   storage_account_access_key = azurerm_storage_account.functionsStorage.primary_access_key
   service_plan_id            = azurerm_service_plan.functionsPlan.id
 
-  site_config {}
+  site_config {
+
+  }
+
+  cors {
+    allowed_origins = ["https://portal.azure.com", "http://localhost:5320", "https://dominioncfg.github.io"]
+  }
 }
