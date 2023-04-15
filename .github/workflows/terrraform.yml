@@ -44,10 +44,7 @@ jobs:
     - name: Terraform Init
       working-directory: terraform
       run: terraform init  \
-            -backend-config=\"resource_group_name=$TF_RESOUCE_GROUP\" \
-            -backend-config=\"storage_account_name=$TF_STORAGE_ACCOUNT\" \
-            -backend-config=\"container_name=$TF_CONTAINER_NAME\" \
-            -backend-config=\"key=$TF_FILE_NAME\" 
+            -backend-config=\"resource_group_name=$TF_RESOUCE_GROUP\" -backend-config=\"storage_account_name=$TF_STORAGE_ACCOUNT\" -backend-config=\"container_name=$TF_CONTAINER_NAME\" -backend-config=\"key=$TF_FILE_NAME\"
 
     - name: Terraform Validate
       working-directory: terraform   
