@@ -5,7 +5,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.65"
+      version = "~> 3.52.0"
     }
   }
   required_version = ">= 1.4.5"
@@ -69,4 +69,32 @@ locals {
 resource "azurerm_resource_group" "rgApp" {
   name     = "rg-${var.application_name}-${local.environment_prefix}-${local.rnd_number}"
   location = var.default_location
+}
+
+resource "azurerm_storage_account" "functionsStorage" {
+  name                     = "st${var.application_name}${local.environment_prefix}${local.rnd_number}"
+  resource_group_name      = azurerm_resource_group.rgApp.name
+  location                 = azurerm_resource_group.rgApp.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+resource "azurerm_service_plan" "functionsPlan" {
+  name                = "plan-${var.application_name}-${local.environment_prefix}-${local.rnd_number}"
+  resource_group_name = azurerm_resource_group.rgApp.name
+  location            = azurerm_resource_group.rgApp.location
+  os_type             = "Linux"
+  sku_name            = "Y1"
+}
+
+resource "azurerm_linux_function_app" "functionPlan" {
+  name                = "fap-${var.application_name}-${local.environment_prefix}-evaluator"
+  resource_group_name = azurerm_resource_group.rgApp.name
+  location            = azurerm_resource_group.rgApp.location
+
+  storage_account_name       = azurerm_storage_account.functionsStorage.name
+  storage_account_access_key = azurerm_storage_account.functionsStorage.primary_access_key
+  service_plan_id            = azurerm_service_plan.functionsPlan.id
+
+  site_config {}
 }
