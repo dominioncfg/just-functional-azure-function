@@ -47,6 +47,10 @@ variable "dotnet_version" {
   default = "6.0"
 }
 
+variable "functions_cors" {
+  type    = list
+  default = ["https://portal.azure.com", "http://localhost:5320", "https://dominioncfg.github.io"]
+}
 
 ##################################################################################
 # Locals
@@ -106,7 +110,7 @@ resource "azurerm_linux_function_app" "functionPlan" {
       dotnet_version = var.dotnet_version
     }
     cors {
-      allowed_origins = ["https://portal.azure.com", "http://localhost:5320", "https://dominioncfg.github.io"]
+      allowed_origins = var.functions_cors
     }
   }
 }
