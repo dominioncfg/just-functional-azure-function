@@ -58,13 +58,13 @@ jobs:
       working-directory: terraform   
       run: |
         terraform plan \
-        -var "cors=$AZURE_FUNCTION_CORS"
+        -var "functions_cors=$AZURE_FUNCTION_CORS"
       
     - name: Terraform Apply
       working-directory: terraform   
       run: |
         terraform apply \
-        -var "cors=$AZURE_FUNCTION_CORS"
+        -var "functions_cors=$AZURE_FUNCTION_CORS"
       
     
     
