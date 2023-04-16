@@ -72,6 +72,7 @@ jobs:
       working-directory: terraform   
       run: |
        export TF_OUTPUT_SERVICE_PLAN_NAME=$(terraform output service_plan_name) 
+       echo "::set-env name=TF_OUTPUT_SERVICE_PLAN_NAME::$TF_OUTPUT_SERVICE_PLAN_NAME"
     
     - name: Temp Print Variables
       working-directory: terraform   
