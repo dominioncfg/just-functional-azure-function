@@ -61,11 +61,11 @@ jobs:
         terraform plan \
         -var "functions_cors=$AZURE_FUNCTION_CORS"
       
-    - name: Terraform Apply
-      working-directory: terraform   
-      run: |
-        terraform apply \
-        -var "functions_cors=$AZURE_FUNCTION_CORS"
+    #- name: Terraform Apply
+    #  working-directory: terraform   
+    #  run: |
+    #    terraform apply \
+    #    -var "functions_cors=$AZURE_FUNCTION_CORS"
 
     - name: Save Terraform's Output To Environment Variables
       working-directory: terraform   
