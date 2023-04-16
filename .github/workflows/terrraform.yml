@@ -65,6 +65,7 @@ jobs:
       working-directory: terraform   
       run: |
         terraform apply \
+        -auto-approve \
         -var "functions_cors=$AZURE_FUNCTION_CORS"
 
     - name: Save Terraform's Output To Environment Variables
