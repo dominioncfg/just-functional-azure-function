@@ -36,6 +36,7 @@ jobs:
       uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: 1.4.5
+        terraform_wrapper: false
  
     - name: Terraform Format
       working-directory: terraform
@@ -65,6 +66,27 @@ jobs:
       run: |
         terraform apply \
         -var "functions_cors=$AZURE_FUNCTION_CORS"
+
+    - name: Save Terraform's Output To Environment Variables
+      working-directory: terraform   
+      run: |
+       output=$(terraform output service_plan_name) 
+       echo $output
+    
+    - name: Temp Print Variables
+      working-directory: terraform   
+      run: |
+       echo "hola=$output"
+
+    #- name: Azure Login
+    #  uses: azure/login@v1
+    #  with:
+    #    creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    #- name: Get Publish Profile
+    #  run: |
+    #    echo "::set-output name=PUBLISH_PROFILE::$(az webapp deployment list-publishing-profiles -g 'resource-group-name' -n 'app-service-name' --xml)"
+    #  id: getPublishProfile
       
     
     

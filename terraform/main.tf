@@ -115,8 +115,8 @@ resource "azurerm_linux_function_app" "functionApp" {
   }
 }
 
-output "db_password" {
-  value       = azurerm_linux_function_app.functionApp.name
-  description = "The Name of the Azure Function"
-  sensitive   = true
+output "service_plan_name" {
+  value       = azurerm_service_plan.functionsPlan.name
+  description = "The Name of the Azure Function's Service Plan"
+  sensitive   = false
 }
