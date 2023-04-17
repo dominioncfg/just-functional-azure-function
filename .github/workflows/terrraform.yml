@@ -84,10 +84,16 @@ jobs:
     #  with:
     #    creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    #- name: Get Publish Profile
-    #  run: |
-    #    echo "::set-output name=PUBLISH_PROFILE::$(az webapp deployment list-publishing-profiles -g 'resource-group-name' -n 'app-service-name' --xml)"
-    #  id: getPublishProfile
+    - name: Get Publish Profile
+      id: getPublishProfile
+      run: |
+        echo "AZ_FUNCTION_PUBLISH_PROFILE=$(az webapp deployment list-publishing-profiles -g '${{ env.TF_OUTPUT_RESOURCE_GROUP_NAME }}' -n '${{ env.TF_OUTPUT_SERVICE_PLAN_NAME }}' --xml)"
+
+    - name: Temp Print Variables 2
+      working-directory: terraform   
+      run: |
+       echo "PP:${{ env.AZ_FUNCTION_PUBLISH_PROFILE }}"
+      
       
     
     
