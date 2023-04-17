@@ -71,12 +71,14 @@ jobs:
     - name: Save Terraform's Output To Environment Variables
       working-directory: terraform   
       run: |
-       echo "TF_OUTPUT_SERVICE_PLAN_NAME=$(terraform output service_plan_name)" >> $GITHUB_ENV
+       echo "TF_OUTPUT_RESOURCE_GROUP_NAME=$(terraform output resource_group_name)" >> $GITHUB_ENV
+       echo "TF_OUTPUT_SERVICE_PLAN_NAME=$(terraform output service_plan_name)" >> $GITHUB_ENV       
     
     - name: Temp Print Variables
       working-directory: terraform   
       run: |
-       echo "hola${{ env.TF_OUTPUT_SERVICE_PLAN_NAME }}"
+       echo "RG:${{ env.TF_OUTPUT_RESOURCE_GROUP_NAME }}"
+       echo "SP:${{ env.TF_OUTPUT_SERVICE_PLAN_NAME }}"
     #- name: Azure Login
     #  uses: azure/login@v1
     #  with:

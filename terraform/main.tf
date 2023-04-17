@@ -115,6 +115,13 @@ resource "azurerm_linux_function_app" "functionApp" {
   }
 }
 
+output "resource_group_name" {
+  value       = azurerm_resource_group.rgApp.name
+  description = "The Name of the Resource Group"
+  sensitive   = false
+}
+
+
 output "service_plan_name" {
   value       = azurerm_service_plan.functionsPlan.name
   description = "The Name of the Azure Function's Service Plan"
