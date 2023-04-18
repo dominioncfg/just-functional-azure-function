@@ -79,10 +79,11 @@ jobs:
       run: |
        echo "RG:${{ env.TF_OUTPUT_RESOURCE_GROUP_NAME }}"
        echo "SP:${{ env.TF_OUTPUT_SERVICE_PLAN_NAME }}"
-    #- name: Azure Login
-    #  uses: azure/login@v1
-    #  with:
-    #    creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Login to Azure Using Service Principal
+      uses: Azure/login@v1
+      with:
+        creds: '{"clientId":"$ARM_CLIENT_ID","clientSecret":"$ARM_CLIENT_SECRET","subscriptionId":"$ARM_SUBSCRIPTION_ID","tenantId":"$ARM_TENANT_ID"}'
 
     - name: Get Publish Profile
       id: getPublishProfile
