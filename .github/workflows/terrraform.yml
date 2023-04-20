@@ -100,7 +100,7 @@ jobs:
     - name: Get Publish Profile
       id: getPublishProfile
       run: |
-        echo "AZ_FUNCTION_PUBLISH_PROFILE=$(az webapp deployment list-publishing-profiles -g ${{ env.TF_OUTPUT_RESOURCE_GROUP_NAME }} -n ${{ env.TF_OUTPUT_SERVICE_PLAN_NAME }} --xml)"
+        echo "AZ_FUNCTION_PUBLISH_PROFILE=$(az functionapp deployment list-publishing-profiles -g ${{ env.TF_OUTPUT_RESOURCE_GROUP_NAME }} -n ${{ env.TF_OUTPUT_SERVICE_PLAN_NAME }} --xml)"
 
     - name: Temp Print Variables 2
       working-directory: terraform   
