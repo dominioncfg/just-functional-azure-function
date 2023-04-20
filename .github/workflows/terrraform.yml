@@ -83,6 +83,7 @@ jobs:
       run: |
        echo "TF_OUTPUT_RESOURCE_GROUP_NAME=$(terraform output resource_group_name)" >> $GITHUB_ENV
        echo "TF_OUTPUT_SERVICE_PLAN_NAME=$(terraform output service_plan_name)" >> $GITHUB_ENV       
+       echo "TF_OUTPUT_FUNCTION_APP_NAME=$(terraform output function_app_name)" >> $GITHUB_ENV
     
     - name: Temp Print Variables
       working-directory: terraform   
@@ -90,17 +91,10 @@ jobs:
        echo "RG:${{ env.TF_OUTPUT_RESOURCE_GROUP_NAME }}"
        echo "SP:${{ env.TF_OUTPUT_SERVICE_PLAN_NAME }}"
     
-
-
-  # - name: Login to Azure Using Service Principal
-  #   uses: Azure/login@v1
-  #   with:
-  #    creds: '{"clientId":"${{ env.ARM_CLIENT_ID }}","clientSecret":"${{ env.ARM_CLIENT_SECRET }}","subscriptionId":"${{ env.ARM_SUBSCRIPTION_ID }}","tenantId":"{{ env.ARM_TENANT_ID }}"}'
-
     - name: Get Publish Profile
       id: getPublishProfile
       run: |
-        echo "AZ_FUNCTION_PUBLISH_PROFILE=$(az functionapp deployment list-publishing-profiles -g ${{ env.TF_OUTPUT_RESOURCE_GROUP_NAME }} -n ${{ env.TF_OUTPUT_SERVICE_PLAN_NAME }} --xml)"
+        echo "AZ_FUNCTION_PUBLISH_PROFILE=$(az functionapp deployment list-publishing-profiles -g ${{ env.TF_OUTPUT_RESOURCE_GROUP_NAME }} -n ${{ env.TF_OUTPUT_FUNCTION_APP_NAME }} --xml)"
 
     - name: Temp Print Variables 2
       working-directory: terraform   

@@ -127,3 +127,10 @@ output "service_plan_name" {
   description = "The Name of the Azure Function's Service Plan"
   sensitive   = false
 }
+
+output "function_app_name" {
+  value       = azurerm_linux_function_app.functionApp.name
+  description = "The Name of the Azure Function's App"
+  sensitive   = false
+}
+
