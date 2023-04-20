@@ -121,13 +121,6 @@ output "resource_group_name" {
   sensitive   = false
 }
 
-
-output "service_plan_name" {
-  value       = azurerm_service_plan.functionsPlan.name
-  description = "The Name of the Azure Function's Service Plan"
-  sensitive   = false
-}
-
 output "function_app_name" {
   value       = azurerm_linux_function_app.functionApp.name
   description = "The Name of the Azure Function's App"

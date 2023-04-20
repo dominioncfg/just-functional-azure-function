@@ -82,25 +82,13 @@ jobs:
       working-directory: terraform   
       run: |
        echo "TF_OUTPUT_RESOURCE_GROUP_NAME=$(terraform output resource_group_name)" >> $GITHUB_ENV
-       echo "TF_OUTPUT_SERVICE_PLAN_NAME=$(terraform output service_plan_name)" >> $GITHUB_ENV       
        echo "TF_OUTPUT_FUNCTION_APP_NAME=$(terraform output function_app_name)" >> $GITHUB_ENV
-    
-    - name: Temp Print Variables
-      working-directory: terraform   
-      run: |
-       echo "RG:${{ env.TF_OUTPUT_RESOURCE_GROUP_NAME }}"
-       echo "SP:${{ env.TF_OUTPUT_SERVICE_PLAN_NAME }}"
     
     - name: Get Publish Profile
       id: getPublishProfile
       run: |
         echo "AZ_FUNCTION_PUBLISH_PROFILE=$(az functionapp deployment list-publishing-profiles -g ${{ env.TF_OUTPUT_RESOURCE_GROUP_NAME }} -n ${{ env.TF_OUTPUT_FUNCTION_APP_NAME }} --xml)" >> $GITHUB_ENV
-
-    - name: Temp Print Variables 2
-      working-directory: terraform   
-      run: |
-       echo "PP:${{ env.AZ_FUNCTION_PUBLISH_PROFILE }}"
-      
+     
       
     
     
