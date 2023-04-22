@@ -1,0 +1,52 @@
+name: Build and Test Azure Function
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+
+env:  
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: '.'
+  DOTNET_VERSION: '6.0.407'
+  AZURE_FUNCTIONAPP_NAME: your-app-name
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 'Checkout GitHub action'
+      uses: actions/checkout@v2
+
+    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+        
+    - name: .Net restore dependencies
+      run: dotnet restore
+    
+    - name: .Net Build
+      run: dotnet build --no-restore --configuration Release
+    
+    - name: .Net Test
+      run: dotnet test --no-build --configuration Release --verbosity normal
+
+    - name: Build Azure Function to Output Directory
+      shell: bash
+      run: |
+        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+        dotnet build src/JustFunctionalEvaluator/JustFunctionalEvaluator.csproj --no-restore --configuration Release --output ./output
+        popd
+    
+    - name: 'Deploy Azure Function After Merge'
+      uses: Azure/functions-action@v1
+      if: success() && github.ref == 'refs/heads/main'
+      with:
+        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+        package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+        publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+  
