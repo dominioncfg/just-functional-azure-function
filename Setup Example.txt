@@ -29,3 +29,5 @@ AZURE_AD_CLIENT_ID
 AZURE_AD_CLIENT_SECRET
 AZURE_AD_TENANT_ID
 AZURE_SUBSCRIPTION_ID
+
+##Ad OIDC Credentials To service Principal so that the azure login works
