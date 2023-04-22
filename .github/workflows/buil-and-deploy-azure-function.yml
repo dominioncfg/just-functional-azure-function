@@ -76,6 +76,12 @@ jobs:
     
     - name: Checkout
       uses: actions/checkout@v2
+    
+    - name: Download Azure Function Artifact from Build Job
+      uses: actions/download-artifact@v3
+      with:
+        name: azure-function
+        path: ./just-funcional-func
 
     - name: 'Login to Azure'
       uses: azure/login@v1
@@ -114,6 +120,7 @@ jobs:
         -var "functions_cors=$AZURE_FUNCTION_CORS"
       
     - name: Terraform Apply
+      if: success() && github.ref == 'refs/heads/main'
       working-directory: terraform   
       run: |
         terraform apply \
@@ -130,15 +137,14 @@ jobs:
       id: getPublishProfile
       run: |
         echo "AZ_FUNCTION_PUBLISH_PROFILE=$(az functionapp deployment list-publishing-profiles -g ${{ env.TF_OUTPUT_RESOURCE_GROUP_NAME }} -n ${{ env.TF_OUTPUT_FUNCTION_APP_NAME }} --xml)" >> $GITHUB_ENV
-     
-    #- name: 'Deploy Azure Function After Merge'
-    #  uses: Azure/functions-action@v1
-    #  if: success() && github.ref == 'refs/heads/main'
-    #  with:
-    #    app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-    #    package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-    #    publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
-      
+
+    - name: 'Deploy Azure Function After Merge'
+      uses: Azure/functions-action@v1
+      if: success() && github.ref == 'refs/heads/main'
+      with:
+        app-name: ${{ env.TF_OUTPUT_FUNCTION_APP_NAME }}
+        package: ./just-funcional-func
+        publish-profile: ${{ env.AZ_FUNCTION_PUBLISH_PROFILE }}
     
     
 
